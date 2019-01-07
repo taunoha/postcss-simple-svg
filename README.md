@@ -1,6 +1,6 @@
-# [postcss-svg](http://pavliko.github.io/postcss-svg/)
+# [postcss-svg](https://github.com/taunoha/postcss-simple-svg)
 [PostCSS](https://github.com/postcss/postcss) plug-in which to insert inline SVG to CSS and allows you to manage it colors.
-Examples [here](http://pavliko.github.io/postcss-svg/#examples)
+Examples [here](https://github.com/taunoha/postcss-simple-svg#examples)
 
 **Features:**
 
@@ -118,7 +118,7 @@ You can use several selectors for one SVG.
 
 In the bottom you can see this selectors in ascending order.
 
-For better understanding of selectors check [examples](https://github.com/taunoha/postcss-svg/tree/master/example).
+For better understanding of selectors check [examples](https://github.com/taunoha/postcss-simple-svg#example).
 
 ### Selectors:
 
@@ -137,15 +137,15 @@ All colors in SVG are grouped in color groups. N - group index, starts from 0 (f
 #### colorN
 All colors in SVG have index. N - index, starts from 0 (from the top of SVG document)
 
-## [Examples](https://github.com/taunoha/postcss-svg/tree/master/example)
+## [Examples](https://github.com/taunoha/postcss-simple-svg#example)
 
 ## Contributing
 Pull requests are welcome.
 To run development envirement
 
 ```
-git clone git@github.com:taunoha/postcss-svg.git
-cd postcss-svg
+git clone git@github.com:taunoha/postcss-simple-svg.git
+cd postcss-simple-svg
 npm install
 gulp watch
 ```

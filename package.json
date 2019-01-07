@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:taunoha/postcss-svg.git"
+    "url": "git@github.com:taunoha/postcss-simple-svg.git"
   },
   "keywords": [
     "postcss",
@@ -22,9 +22,9 @@
   "author": "Pavel Gorlov, Tauno Hanni",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/taunoha/postcss-svg/blob/master/issues"
+    "url": "https://github.com/taunoha/postcss-simple-svg/blob/master/issues"
   },
-  "homepage": "https://github.com/taunoha/postcss-svg/blob/master/README.md",
+  "homepage": "https://github.com/taunoha/postcss-simple-svg/blob/master/README.md",
   "dependencies": {
     "color": "3.1.0",
     "dot": "1.1.2",

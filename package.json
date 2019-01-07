@@ -1,11 +1,11 @@
 {
-  "name": "postcss-svg",
-  "version": "1.0.6",
+  "name": "simple-postcss-svg",
+  "version": "1.0.0",
   "description": "Postcss plugin for insert inline SVG to CSS",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Pavliko/postcss-svg.git"
+    "url": "git@github.com:taunoha/postcss-svg.git"
   },
   "keywords": [
     "postcss",
@@ -19,29 +19,29 @@
     "background",
     "postcss-plugin"
   ],
-  "author": "Pavel Gorlov",
+  "author": "Pavel Gorlov, Tauno Hanni",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Pavliko/postcss-svg/issues"
+    "url": "https://github.com/taunoha/postcss-svg/blob/master/issues"
   },
-  "homepage": "https://github.com/Pavliko/postcss-svg#readme",
+  "homepage": "https://github.com/taunoha/postcss-svg/blob/master/README.md",
   "dependencies": {
-    "color": "0.10.1",
-    "dot": "1.0.3",
-    "evil-icons": "1.7.8",
-    "lodash": "3.10.1",
-    "postcss": "5.0.10",
-    "svgo": "0.5.6",
-    "xmldom": "0.1.19"
+    "color": "3.1.0",
+    "dot": "1.1.2",
+    "evil-icons": "1.10.1",
+    "lodash": "4.17.11",
+    "postcss": "7.0.7",
+    "svgo": "1.1.1",
+    "xmldom": "0.1.27"
   },
   "devDependencies": {
     "autoprefixer-core": "6.0.1",
-    "gulp": "3.9.0",
-    "gulp-coffee": "2.3.1",
-    "gulp-livereload": "3.8.1",
-    "gulp-load-plugins": "1.1.0",
-    "gulp-postcss": "6.0.1",
-    "gulp-rename": "1.2.2",
+    "gulp": "4.0.0",
+    "gulp-coffee": "3.0.3",
+    "gulp-livereload": "4.0.1",
+    "gulp-load-plugins": "1.5.0",
+    "gulp-postcss": "8.0.0",
+    "gulp-rename": "1.4.0",
     "open": "0.0.5"
   }
 }

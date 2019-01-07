@@ -118,7 +118,7 @@ You can use several selectors for one SVG.
 
 In the bottom you can see this selectors in ascending order.
 
-For better understanding of selectors check [examples](http://pavliko.github.io/postcss-svg/#examples).
+For better understanding of selectors check [examples](https://github.com/taunoha/postcss-svg/tree/master/example).
 
 ### Selectors:
 
@@ -137,19 +137,15 @@ All colors in SVG are grouped in color groups. N - group index, starts from 0 (f
 #### colorN
 All colors in SVG have index. N - index, starts from 0 (from the top of SVG document)
 
-## [Examples](http://pavliko.github.io/postcss-svg/#examples)
+## [Examples](https://github.com/taunoha/postcss-svg/tree/master/example)
 
 ## Contributing
 Pull requests are welcome.
 To run development envirement
 
 ```
-git clone git@github.com:Pavliko/postcss-svg.git
+git clone git@github.com:taunoha/postcss-svg.git
 cd postcss-svg
 npm install
 gulp watch
 ```
-
-## [Changelog](CHANGELOG.md)
-
-## [License](LCENSE)

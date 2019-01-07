@@ -13,7 +13,7 @@ Examples [here](https://github.com/taunoha/postcss-simple-svg/tree/master/exampl
 ## Installation
 
 ```bash
-npm install postcss-svg --save-dev
+npm install postcss-simple-svg --save-dev
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ PostCSS:
 ```javascript
 //...
 var postcss = require('postcss');
-var postcssSVG = require('postcss-svg');
+var postcssSVG = require('postcss-simple-svg');
 var processors = [
   //... ,
   postcssSVG({
@@ -47,7 +47,7 @@ var postcss = require('gulp-postcss');
 
 gulp.task('styles', function() {
   var postcssProcessors;
-  postcssSVG = require.reload('postcss-svg');
+  postcssSVG = require.reload('postcss-simple-svg');
   postcssProcessors = [
     postcssSVG({ defaults: '[fill]: green' })
   ];
@@ -62,7 +62,7 @@ Using this `input.css`:
 
 ```css
 body {
-  background-image: svg("ei#sc-github", "[fill]: black");
+  background-image: svg("icon__filter", "[fill]: black");
 }
 ```
 

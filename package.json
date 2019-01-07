@@ -1,5 +1,5 @@
 {
-  "name": "simple-postcss-svg",
+  "name": "postcss-simple-svg",
   "version": "1.0.0",
   "description": "Postcss plugin for insert inline SVG to CSS",
   "main": "dist/index.js",

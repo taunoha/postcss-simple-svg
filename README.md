@@ -1,4 +1,4 @@
-# [postcss-svg](https://github.com/taunoha/postcss-simple-svg)
+# postcss-simple-svg
 [PostCSS](https://github.com/postcss/postcss) plug-in which to insert inline SVG to CSS and allows you to manage it colors.
 Examples [here](https://github.com/taunoha/postcss-simple-svg#examples)
 

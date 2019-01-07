@@ -1,6 +1,6 @@
 # postcss-simple-svg
 [PostCSS](https://github.com/postcss/postcss) plug-in which to insert inline SVG to CSS and allows you to manage it colors.
-Examples [here](https://github.com/taunoha/postcss-simple-svg#examples)
+Examples [here](https://github.com/taunoha/postcss-simple-svg/tree/master/example)
 
 **Features:**
 
@@ -118,7 +118,7 @@ You can use several selectors for one SVG.
 
 In the bottom you can see this selectors in ascending order.
 
-For better understanding of selectors check [examples](https://github.com/taunoha/postcss-simple-svg#example).
+For better understanding of selectors check [examples](https://github.com/taunoha/postcss-simple-svg/tree/master/example).
 
 ### Selectors:
 
@@ -136,8 +136,6 @@ All colors in SVG are grouped in color groups. N - group index, starts from 0 (f
 `fill` or `stroke` tag attributes with id identifier
 #### colorN
 All colors in SVG have index. N - index, starts from 0 (from the top of SVG document)
-
-## [Examples](https://github.com/taunoha/postcss-simple-svg#example)
 
 ## Contributing
 Pull requests are welcome.

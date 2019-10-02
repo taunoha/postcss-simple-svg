@@ -1,6 +1,5 @@
 (function() {
-  var SVGImage, _, fs, path,
-    slice = [].slice;
+  var SVGImage, _, fs, path;
 
   SVGImage = require('./svg_image');
 
@@ -43,7 +42,7 @@
             ref1 = fs.readdirSync(myPath);
             for (j = 0, len1 = ref1.length; j < len1; j++) {
               filename = ref1[j];
-              this.addToIndex("" + myPath + path.sep + filename, this.svgOptions);
+              this.addToIndex(`${myPath}${path.sep}${filename}`, this.svgOptions);
             }
           } else {
             if (stat.isFile()) {
@@ -56,21 +55,18 @@
         return console.timeEnd('Index generation');
       }
     },
-    addToIndex: function(filePath, options) {
+    addToIndex: function(filePath, options = {}) {
       var base, basename, basenameWithExt, svg;
-      if (options == null) {
-        options = {};
-      }
       if (path.extname(filePath) === '.svg') {
         svg = new SVGImage(filePath, options);
         basename = path.basename(filePath, '.svg');
-        basenameWithExt = basename + ".svg";
+        basenameWithExt = `${basename}.svg`;
         if (this.filesIndex[basename]) {
           this.filesIndex[basenameWithExt] = this.filesIndex[basename] = this.filesIndex[basename].error ? ((base = this.filesIndex[basename]).paths || (base.paths = []), this.filesIndex[basename].paths.push(svg.path)) : {
             error: true,
             livel: 'Warning',
             getMessage: function() {
-              return "You have some files with this basename: " + (this.filesIndex[basename].paths.join(', '));
+              return `You have some files with this basename: ${this.filesIndex[basename].paths.join(', ')}`;
             },
             paths: [this.filesIndex[basename].path, svg.path]
           };
@@ -80,12 +76,9 @@
         return this.filesIndex[filePath] = this.filesIndex[filePath.slice(0, -4)] = svg;
       }
     },
-    get: function(identifier, second) {
-      var ids, link, ref, svg;
-      if (second == null) {
-        second = false;
-      }
-      ref = identifier.split('#'), link = ref[0], ids = 2 <= ref.length ? slice.call(ref, 1) : [];
+    get: function(identifier, second = false) {
+      var ids, link, svg;
+      [link, ...ids] = identifier.split('#');
       if (svg = this.filesIndex[link]) {
         if (svg.error) {
           throw svg.getMessage();
@@ -94,9 +87,9 @@
         }
       } else {
         if (second) {
-          throw "'" + link + "' not found in SVG csche (paths: " + (this.paths.join(', ')) + ")";
+          throw `'${link}' not found in SVG csche (paths: ${this.paths.join(', ')})`;
         } else {
-          identifier = (identifier.indexOf('.svg') === -1 ? identifier + ".svg" : identifier);
+          identifier = (identifier.indexOf('.svg') === -1 ? `${identifier}.svg` : identifier);
           this.addToIndex(identifier, this.svgOptions);
           return this.get(identifier, true);
         }

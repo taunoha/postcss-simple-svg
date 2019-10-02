@@ -4,7 +4,7 @@ gulp =             require('gulp')
 $ =                require('gulp-load-plugins')()
 open =             require('open')
 
-autoprefixer =     require('autoprefixer-core')
+autoprefixer =     require('autoprefixer')
 postcssInlineSVG = require('./index.coffee')
 
 gulp.task 'styles', ->
@@ -18,7 +18,7 @@ gulp.task 'styles', ->
       ei:
         defaults: '[fill]: green'
     )
-    autoprefixer(browsers: [ 'last 1 version' ])
+    autoprefixer()
   ]
 
   gulp.src('example/style.css')

@@ -13,12 +13,9 @@
 
   SVGO = require('svgo');
 
-  SVGImage = (function() {
-    function SVGImage(filePath, options) {
+  SVGImage = class SVGImage {
+    constructor(filePath, options = {}) {
       var svgo;
-      if (options == null) {
-        options = {};
-      }
       this.path = filePath;
       this.options = options;
       this.xml = options.content;
@@ -31,24 +28,21 @@
       this._parseSvg();
     }
 
-    SVGImage.prototype.svgFor = function(ids) {
+    svgFor(ids) {
       var id, sprite;
       if (!ids || _.isEmpty(ids)) {
         return this;
       }
-      id = "" + (this.sprite.prefix || '') + ids[0] + (this.sprite.postfix || '');
+      id = `${this.sprite.prefix || ''}${ids[0]}${this.sprite.postfix || ''}`;
       if (sprite = this.sprites[id]) {
         return sprite.svgFor(ids.slice(1));
       } else {
-        throw new Error("Can\'t find sprite with id " + id);
+        throw new Error(`Can\'t find sprite with id ${id}`);
       }
-    };
+    }
 
-    SVGImage.prototype.dataUrl = function(params) {
+    dataUrl(params = {}) {
       var svg;
-      if (params == null) {
-        params = {};
-      }
       if (_.isString(params)) {
         params = this._parseStyle(params);
       }
@@ -57,10 +51,10 @@
       if (this.svgo) {
         svg = this._svgoSync(svg);
       }
-      return "url(\"data:image/svg+xml;charset=utf-8," + (encodeURIComponent(svg)) + "\")";
-    };
+      return `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
+    }
 
-    SVGImage.prototype._svgoSync = function(svgString) {
+    _svgoSync(svgString) {
       var result;
       result = false;
       this.svgo.optimize(svgString, function(str) {
@@ -71,10 +65,10 @@
           return result;
         }
       }
-    };
+    }
 
-    SVGImage.prototype._parseStyle = function(string) {
-      var i, key, len, ref, ref1, result, rule, value;
+    _parseStyle(string) {
+      var i, key, len, ref, result, rule, value;
       result = {};
       if (!string || string.indexOf(':') === -1) {
         return result;
@@ -83,50 +77,45 @@
       for (i = 0, len = ref.length; i < len; i++) {
         rule = ref[i];
         if (rule.indexOf(':') !== -1) {
-          ref1 = rule.split(':'), key = ref1[0], value = ref1[1];
+          [key, value] = rule.split(':');
           result[key] = value;
         }
       }
       return result;
-    };
+    }
 
-    SVGImage.prototype._parseSvg = function() {
+    _parseSvg() {
       var doc, result, xml;
       result = {};
       xml = this.xml || fs.readFileSync(this.path).toString();
       doc = new xmldom.DOMParser().parseFromString(xml, "image/svg+xml");
       this.svgAttributes = this._parseAttributes(doc.childNodes[0].attributes);
-      doc = this._parseNode(doc, result, (function(_this) {
-        return function(node, attributes) {
-          return _this._readColors(node, attributes);
-        };
-      })(this));
+      doc = this._parseNode(doc, result, (node, attributes) => {
+        return this._readColors(node, attributes);
+      });
       this._checkSVG(doc);
       doc = new xmldom.XMLSerializer().serializeToString(doc);
       return this.template = doT.template(doc, _.extend(doT.templateSettings, {
         strip: false
       }));
-    };
+    }
 
-    SVGImage.prototype._checkSVG = function(doc) {
+    _checkSVG(doc) {
       var transform;
       if (!(Object.keys(this.colors).length > 0)) {
         transform = function(key) {
-          return "(it['[" + key + "]'] ? '" + key + ":'+it['[" + key + "]']+';' : '')";
+          return `(it['[${key}]'] ? '${key}:'+it['[${key}]']+';' : '')`;
         };
-        doc.setAttribute('style', "{{= " + (_.map(['fill', 'stroke'], transform).join('+')) + " }}");
+        doc.setAttribute('style', `{{= ${_.map(['fill', 'stroke'], transform).join('+')} }}`);
       }
       if (!(this.svgAttributes.height || this.svgAttributes.width)) {
         doc.setAttribute('height', "{{= it['[height]'] || it['[size]'] || '100%' }}");
         return doc.setAttribute('width', "{{= it['[width]'] || it['[size]'] || '100%' }}");
       }
-    };
+    }
 
-    SVGImage.prototype._parseNode = function(node, result, callback, path) {
+    _parseNode(node, result, callback, path = '') {
       var attributes, i, len, nodePath, ref;
-      if (path == null) {
-        path = '';
-      }
       if (node.childNodes) {
         ref = node.childNodes;
         for (i = 0, len = ref.length; i < len; i++) {
@@ -134,12 +123,12 @@
           nodePath = path;
           if (node.tagName) {
             attributes = this._parseAttributes(node.attributes) || {};
-            nodePath += "" + (path === '' ? '' : '>') + node.tagName;
+            nodePath += `${(path === '' ? '' : '>')}${node.tagName}`;
             if (attributes.id && node.tagName !== 'svg') {
-              nodePath += "#" + attributes.id.value;
+              nodePath += `#${attributes.id.value}`;
             }
-            if (attributes["class"]) {
-              nodePath += "." + attributes["class"].value;
+            if (attributes.class) {
+              nodePath += `.${attributes.class.value}`;
             }
             if (node.tagName === 'symbol') {
               this._addSprite(node);
@@ -151,18 +140,18 @@
         }
       }
       return node;
-    };
+    }
 
-    SVGImage.prototype._readColors = function(node, attributes) {
+    _readColors(node, attributes) {
       if (attributes.fill) {
         this._addColor('fill', attributes, node);
       }
       if (attributes.stroke) {
         return this._addColor('stroke', attributes, node);
       }
-    };
+    }
 
-    SVGImage.prototype._parseAttributes = function(attributes) {
+    _parseAttributes(attributes) {
       var attribute, index, result;
       result = {};
       if (attributes) {
@@ -177,9 +166,9 @@
         }
       }
       return result;
-    };
+    }
 
-    SVGImage.prototype._addSprite = function(node) {
+    _addSprite(node) {
       var attributes, id, key, ref, sprite, svg, value;
       if (node.tagName !== 'symbol') {
         return;
@@ -187,7 +176,7 @@
       node = node.cloneNode(true);
       attributes = this._parseAttributes(node.attributes);
       node.tagName = 'svg';
-      id = attributes.id && attributes.id.value || ("sprite" + (Object.keys(this.sprites).length));
+      id = attributes.id && attributes.id.value || `sprite${(Object.keys(this.sprites).length)}`;
       ref = _.assign({}, this.svgAttributes, attributes);
       for (key in ref) {
         value = ref[key];
@@ -204,13 +193,13 @@
         defaults: this.options.defaults
       });
       return this.sprites[id] = sprite;
-    };
+    }
 
-    SVGImage.prototype._addColor = function(type, attributes, node) {
-      var base, color, error, key, selectors, typeSelector;
+    _addColor(type, attributes, node) {
+      var base, color, key, selectors, typeSelector;
       try {
         color = attributes[type].value === 'none' ? Color('rgba(255, 255, 255, 0)') : Color(attributes[type].value);
-        typeSelector = "[" + type + "]";
+        typeSelector = `[${type}]`;
         key = color.rgbaString();
         (base = this.colors)[key] || (base[key] = {
           color: color,
@@ -219,30 +208,28 @@
           selectors: []
         });
         this.colors[key].count++;
-        this.colors[key].selectors.push("" + attributes.path + typeSelector);
-        selectors = ["color" + (this.colorCount++ || '0')];
+        this.colors[key].selectors.push(`${attributes.path}${typeSelector}`);
+        selectors = [`color${this.colorCount++ || '0'}`];
         if (attributes.id) {
-          selectors.push("#" + attributes.id.value + typeSelector);
+          selectors.push(`#${attributes.id.value}${typeSelector}`);
         }
-        selectors.push("colorGroup" + (this.colors[key].index || '0'));
-        if (attributes["class"]) {
-          selectors.push("." + attributes["class"].value + typeSelector);
+        selectors.push(`colorGroup${this.colors[key].index || '0'}`);
+        if (attributes.class) {
+          selectors.push(`.${attributes.class.value}${typeSelector}`);
         }
-        selectors.push(node.tagName + "[" + type + "]");
+        selectors.push(`${node.tagName}[${type}]`);
         selectors.push(typeSelector);
         selectors.push("[color]");
         selectors = _.map(selectors, function(selector) {
-          return "it[\'" + selector + "\']";
+          return `it[\'${selector}\']`;
         });
-        return node.attributes[attributes[type].index].value = "{{= " + (selectors.join(' || ')) + " || \'" + attributes[type].value + "\'}}";
+        return node.attributes[attributes[type].index].value = `{{= ${selectors.join(' || ')} || \'${attributes[type].value}\'}}`;
       } catch (error) {
 
       }
-    };
+    }
 
-    return SVGImage;
-
-  })();
+  };
 
   module.exports = SVGImage;
 

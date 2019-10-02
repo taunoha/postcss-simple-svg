@@ -2,7 +2,7 @@ postcss = require 'postcss'
 SVGCache = require('./lib/svg_cache')
 _ = require('lodash')
 
-module.exports = postcss.plugin "postcss-svg", (options = {}) ->
+module.exports = postcss.plugin "postcss-simple-svg", (options = {}) ->
   funcName = options.func || 'svg'
   SVGRegExp = new RegExp("#{funcName}\\(\"([^\"]+)\"(,\\s*\"([^\"]+)\")?\\)")
   replaceRegExp = new RegExp("#{funcName}\\((\"[^\"]+\"|\'[^\']+\')(,\\s*(\"[^\"]+\"|\'[^\']+\'))?\\)")
@@ -21,7 +21,7 @@ module.exports = postcss.plugin "postcss-svg", (options = {}) ->
           svg = SVGCache.get(name)
         catch error
           if silent
-            decl.warn result, "postcss-svg: #{error}"
+            decl.warn result, "postcss-simple-svg: #{error}"
           else
             throw decl.error(error)
         return unless svg
